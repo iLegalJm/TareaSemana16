@@ -78,8 +78,10 @@ public class LibroControl {
         return items;
     }
     
-    public String actualizar(String titulo, int numPaginas, String editorial){
-              
+    public String actualizar(int id, int id_autor,String titulo, int numPaginas, String editorial){
+        
+        objLibro.setId(id);        
+        objLibro.setId_autor(id_autor);
         objLibro.setTitulo(titulo);
         objLibro.setPaginas(numPaginas);
         objLibro.setEditorial(editorial);
@@ -88,6 +90,17 @@ public class LibroControl {
             return "OK";
         } else {
             return "Error al actualizar registro";            
+        }
+    }
+    
+    public String eliminar(int id){
+        
+        objLibro.setId(id);                              
+        
+        if (DATOS.eliminar(objLibro)) {
+            return "OK";
+        } else {
+            return "Error al eliminar registro";            
         }
     }
 }

@@ -29,7 +29,8 @@ public class LibroFrame extends javax.swing.JFrame {
         this.CONTROL = new LibroControl();
         this.listar("");
         this.cargarAutores();
-        this.accion = "Guardar";
+        txtid.setVisible(false);
+        this.accion="guardar";
     }
     
     private void listar(String texto){
@@ -37,8 +38,15 @@ public class LibroFrame extends javax.swing.JFrame {
         tablaListado.setModel(this.CONTROL.listar(texto));
     }
     
-    private void insertar(){
-        
+    private void limpiar(){
+        txtBuscar.setText("");
+        txtBuscar.setText("");
+        txtEditorial.setText("");
+        txtNumPaginas.setText("");
+        txtTitulo.setText("");
+        txtid.setText("");
+        txtid.setVisible(false);
+        this.listar("");
     }
     
     private void cargarAutores() {
@@ -81,7 +89,9 @@ public class LibroFrame extends javax.swing.JFrame {
         btnGuardar = new javax.swing.JButton();
         lblTitulo = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
-        jButton3 = new javax.swing.JButton();
+        btnModificar = new javax.swing.JButton();
+        txtid = new javax.swing.JTextField();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -143,11 +153,19 @@ public class LibroFrame extends javax.swing.JFrame {
         lblTitulo.setFont(new java.awt.Font("Roboto", 1, 24)); // NOI18N
         lblTitulo.setText("Insertar Libros");
 
-        jButton3.setFont(new java.awt.Font("Roboto Black", 1, 14)); // NOI18N
-        jButton3.setText("Modificar");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        btnModificar.setFont(new java.awt.Font("Roboto Black", 1, 14)); // NOI18N
+        btnModificar.setText("Modificar");
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                btnModificarActionPerformed(evt);
+            }
+        });
+
+        jButton2.setFont(new java.awt.Font("Roboto Black", 1, 14)); // NOI18N
+        jButton2.setText("Eliminar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
             }
         });
 
@@ -164,7 +182,7 @@ public class LibroFrame extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 988, Short.MAX_VALUE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 793, Short.MAX_VALUE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -174,7 +192,9 @@ public class LibroFrame extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jButton3)
+                                .addComponent(btnModificar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jButton2)
                                 .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(40, 40, 40)
@@ -189,15 +209,18 @@ public class LibroFrame extends javax.swing.JFrame {
                                 .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(36, 36, 36)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtEditorial)
-                            .addComponent(txtNumPaginas, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel4))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtEditorial)
+                                    .addComponent(txtNumPaginas, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtid, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 62, Short.MAX_VALUE)))
                 .addContainerGap())
             .addComponent(jSeparator2)
         );
@@ -211,7 +234,8 @@ public class LibroFrame extends javax.swing.JFrame {
                             .addComponent(jLabel1)
                             .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton1)
-                            .addComponent(jButton3)))
+                            .addComponent(btnModificar)
+                            .addComponent(jButton2)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(47, 47, 47)
                         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -235,7 +259,8 @@ public class LibroFrame extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(37, 37, 37))
         );
 
@@ -256,7 +281,8 @@ public class LibroFrame extends javax.swing.JFrame {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
-         String resp="";
+         String resp;
+               
          
         if (this.accion.equals("guardar")) {           
             Autor seleccionado = (Autor) cboAutor.getSelectedItem();
@@ -264,38 +290,36 @@ public class LibroFrame extends javax.swing.JFrame {
         
             if (resp.equals("OK")) {
                 this.mensajeOK("Insetado Correctamente");
+                this.limpiar();
             } else{
                 this.mensajeError(resp);
             }            
         } 
         
         if (this.accion.equals("modificar")) {
+            Autor seleccionado = (Autor) cboAutor.getSelectedItem();
+            resp = this.CONTROL.actualizar(Integer.parseInt(txtid.getText()), seleccionado.getId() , txtTitulo.getText(), Integer.parseInt(txtNumPaginas.getText()), txtEditorial.getText());
             
-            int id_autor= Integer.parseInt(String.valueOf(tablaListado.getValueAt(tablaListado.getSelectedRow(), 1)));
-            String autor = String.valueOf(tablaListado.getValueAt(tablaListado.getSelectedRow(), 2));
-            String titulo = String.valueOf(tablaListado.getValueAt(tablaListado.getSelectedRow(), 3));
-            String paginas = String.valueOf(tablaListado.getValueAt(tablaListado.getSelectedRow(), 4));
-            String editorial = String.valueOf(tablaListado.getValueAt(tablaListado.getSelectedRow(), 5));
-            
-            Autor seleccionado = new Autor(id_autor, autor);
-            cboAutor.setSelectedItem(seleccionado);
-            txtTitulo.setText(titulo);
-            txtNumPaginas.setText(paginas);
-            txtEditorial.setText(editorial);
-            resp = this.CONTROL.actualizar(txtTitulo.getText(), Integer.parseInt(txtNumPaginas.getText()), txtEditorial.getText());
-                        
-            
-                     
+            if (resp.equals("OK")) {
+                this.mensajeOK("Actualizado Correctamente");   
+                this.limpiar();
+                this.accion="guardar";
+                btnGuardar.setText("Guardar");
+            } else{
+                this.mensajeError(resp);
+            }                  
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         // TODO add your handling code here:
         
         if (tablaListado.getSelectedRowCount()==1) {
+            txtid.setVisible(true);
             this.accion = "modificar";
             btnGuardar.setText("Editar");  
             
+            String id = String.valueOf(tablaListado.getValueAt(tablaListado.getSelectedRow(), 0));
             int id_autor= Integer.parseInt(String.valueOf(tablaListado.getValueAt(tablaListado.getSelectedRow(), 1)));
             String autor = String.valueOf(tablaListado.getValueAt(tablaListado.getSelectedRow(), 2));
             String titulo = String.valueOf(tablaListado.getValueAt(tablaListado.getSelectedRow(), 3));
@@ -303,16 +327,38 @@ public class LibroFrame extends javax.swing.JFrame {
             String editorial = String.valueOf(tablaListado.getValueAt(tablaListado.getSelectedRow(), 5));
             
             Autor seleccionado = new Autor(id_autor, autor);
+            txtid.setText(id);
             cboAutor.setSelectedItem(seleccionado);
             txtTitulo.setText(titulo);
             txtNumPaginas.setText(paginas);
             txtEditorial.setText(editorial);
             
         } else{
-            this.mensajeError("Seleccione un item");
+            this.mensajeError("Seleccione un libro");
         }
         
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        String resp;
+        if (tablaListado.getSelectedRowCount()==1) {
+            int id= Integer.parseInt(String.valueOf(tablaListado.getValueAt(tablaListado.getSelectedRow(), 0)));
+            
+            if (JOptionPane.showConfirmDialog(this, "Deseas eliminar el registro: ", "Eliminar", JOptionPane.YES_NO_OPTION) == 0) {
+                resp=this.CONTROL.eliminar(id);
+                if (resp.equals("OK")) {
+                    this.mensajeOK("Eliminado correcamente");
+                } else{
+                    this.mensajeError(resp);
+                }
+            }
+            
+            this.listar("");
+        } else{
+            this.mensajeError("Seleccione un libro para borrar");
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -351,9 +397,10 @@ public class LibroFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnGuardar;
+    private javax.swing.JButton btnModificar;
     private javax.swing.JComboBox<String> cboAutor;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -369,5 +416,6 @@ public class LibroFrame extends javax.swing.JFrame {
     private javax.swing.JTextField txtEditorial;
     private javax.swing.JTextField txtNumPaginas;
     private javax.swing.JTextField txtTitulo;
+    private javax.swing.JTextField txtid;
     // End of variables declaration//GEN-END:variables
 }

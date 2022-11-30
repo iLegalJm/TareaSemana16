@@ -79,19 +79,35 @@ public class LibroDAO implements CrudSimple<Libro>{
     }
 
     @Override
-    public boolean eliminar(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public boolean eliminar(Libro obj) {
+        resp = false;
+        try {
+            ps = cx.conectar().prepareStatement("delete from libro where id=?");
+            ps.setInt(1, obj.getId());
+            
+            if (ps.executeUpdate()>0) {
+                resp = true;
+            }
+            ps.close();           
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        } finally{
+            ps = null;          
+            cx.desconectar();
+        }        
+        return resp;
     }
 
     @Override
     public boolean actualizar(Libro obj) {
         resp = false;
         try {
-            ps = cx.conectar().prepareStatement("update libro set titulo=?, paginas=?, editorial=? where id=?");
-            ps.setString(1, obj.getTitulo());
-            ps.setInt(2, obj.getPaginas());
-            ps.setString(3, obj.getEditorial());     
-            ps.setInt(4, obj.getId());
+            ps = cx.conectar().prepareStatement("update libro set id_autor=?,titulo=?, paginas=?, editorial=? where id=?");
+            ps.setInt(1, obj.getId_autor());
+            ps.setString(2, obj.getTitulo());
+            ps.setInt(3, obj.getPaginas());
+            ps.setString(4, obj.getEditorial());     
+            ps.setInt(5, obj.getId());
             
             if (ps.executeUpdate()>0) {
                 resp = true;

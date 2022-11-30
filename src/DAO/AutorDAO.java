@@ -84,12 +84,12 @@ public class AutorDAO implements CrudSimple<Autor>{
     }
 
     @Override
-    public boolean eliminar(int id) {
+    public boolean actualizar(Autor obj) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public boolean actualizar(Autor obj) {
+    public boolean eliminar(Autor obj) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
